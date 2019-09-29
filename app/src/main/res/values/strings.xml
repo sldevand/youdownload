@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">YouDownload</string>
+    <string name="error_no_yt_link">No Youtube Link</string>
+    <string name="youtube_url_hint">Youtube Url</string>
+    <string name="download">Download</string>
+</resources>
