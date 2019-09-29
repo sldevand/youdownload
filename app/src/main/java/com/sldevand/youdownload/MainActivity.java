@@ -1,14 +1,13 @@
 package com.sldevand.youdownload;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.URLUtil;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-import com.example.youdownload.R;
 import com.sldevand.youdownload.service.YtDownloader;
 
 public class MainActivity extends RootActivity {
@@ -30,24 +29,44 @@ public class MainActivity extends RootActivity {
     protected void launchPermittedAction() {
         super.launchPermittedAction();
 
+        Button downloadButton = findViewById(R.id.downloadImageButton);
         if (null == this.mSavedInstanceState && Intent.ACTION_SEND.equals(getIntent().getAction())
                 && getIntent().getType() != null && "text/plain".equals(getIntent().getType())) {
+
             handleIntent();
+            return;
         }
 
+        downloadButton.setEnabled(true);
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText uriEditText = findViewById(R.id.uriEditText);
+                String ytLink = uriEditText.getText().toString();
 
-        ImageButton downloadButton = findViewById(R.id.downloadImageButton);
+                if (!URLUtil.isValidUrl(ytLink)) {
+                    Toast.makeText(
+                            MainActivity.this,
+                            MainActivity.this.getString(R.string.not_valid_url),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
 
+                extract(ytLink);
+            }
+        });
     }
 
     private void handleIntent() {
 
         String ytLink = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         EditText uriEditText = findViewById(R.id.uriEditText);
-        VideoView videoView = findViewById(R.id.youtubeVideoView);
         uriEditText.setText(ytLink);
-        videoView.setVideoURI(Uri.parse(ytLink));
 
+        this.extract(ytLink);
+    }
+
+    private void extract(String ytLink) {
         if (null == ytLink) {
             Toast.makeText(this, R.string.error_no_yt_link, Toast.LENGTH_LONG).show();
             finish();

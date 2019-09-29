@@ -17,19 +17,22 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:autofillHints="@string/youtube_url_hint"
-       android:inputType="textUri" />
+       android:inputType="textUri"
+       android:text="https://youtu.be/4OkSsFsXLD8"/>
 
-   <VideoView
-       android:id="@+id/youtubeVideoView"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@+id/uriEditText" />
+    <Button
+        android:id="@+id/downloadImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/download"
+        android:layout_below="@id/uriEditText"/>
 
-   <ImageButton
-       android:id="@+id/downloadImageButton"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:contentDescription="@string/download"
-       android:layout_below="@+id/youtubeVideoView"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_below="@id/downloadImageButton" />
 
 </RelativeLayout>

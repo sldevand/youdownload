@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.youdownload">
+    package="com.sldevand.youdownload">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,6 +22,13 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name="com.sldevand.youdownload.receiver.DownloadListenerService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
         <activity android:name="com.sldevand.youdownload.RootActivity" />
     </application>
 </manifest>

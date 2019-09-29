@@ -15,7 +15,7 @@ import at.huber.youtubeExtractor.YtFile;
 public class YtDownloader {
     private static final String TAG = "YtDownloader";
 
-    private static final int AUDIO_ITAG = 140;
+    private static final int MP4_360P_ITAG = 18;
 
     private Context mContext;
 
@@ -35,7 +35,7 @@ public class YtDownloader {
                         Log.e("onCreate", ytFiles.get(key).toString());
                     }
 
-                    YtFile ytFile = ytFiles.get(AUDIO_ITAG);
+                    YtFile ytFile = ytFiles.get(MP4_360P_ITAG);
                     String downloadUrl = ytFile.getUrl();
                     String filename = formatFileName(vMeta.getTitle(), ytFile);
 
@@ -55,8 +55,8 @@ public class YtDownloader {
         return filename.replaceAll("[\\\\><\"|*?%:#/]", "");
     }
 
-    private boolean downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {
-        Toast.makeText(mContext, "Download Started", Toast.LENGTH_LONG).show();
+    private void downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {
+        Toast.makeText(mContext, "Download Started", Toast.LENGTH_SHORT).show();
         Uri uri = Uri.parse(youtubeDlUrl);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setTitle(downloadTitle);
@@ -68,6 +68,7 @@ public class YtDownloader {
         DownloadManager manager = (DownloadManager) this.mContext.getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
 
-        return true;
+
+
     }
 }

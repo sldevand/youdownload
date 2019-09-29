@@ -18,18 +18,19 @@
         android:layout_height="wrap_content"
         android:inputType="textUri" />
 
-    <VideoView
-        android:id="@+id/youtubeVideoView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/uriEditText" />
-
-    <ImageButton
+    <Button
         android:id="@+id/downloadImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/download"
-        android:layout_below="@+id/youtubeVideoView"
-        android:src="@android:drawable/ic_menu_day"/>
+        android:text="@string/download"
+        android:layout_below="@id/uriEditText"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_below="@id/downloadImageButton" />
 
 </RelativeLayout>

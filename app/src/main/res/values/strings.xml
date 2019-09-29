@@ -3,4 +3,5 @@
     <string name="error_no_yt_link">No Youtube Link</string>
     <string name="youtube_url_hint">Youtube Url</string>
     <string name="download">Download</string>
+    <string name="not_valid_url">Url is not valid!</string>
 </resources>
