@@ -22,13 +22,6 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <receiver
-            android:name="com.sldevand.youdownload.receiver.DownloadListenerService"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
         <activity android:name="com.sldevand.youdownload.RootActivity" />
     </application>
 </manifest>

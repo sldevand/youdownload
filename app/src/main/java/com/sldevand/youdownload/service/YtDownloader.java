@@ -8,6 +8,8 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import com.sldevand.youdownload.MainActivity;
+
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
@@ -15,17 +17,16 @@ import at.huber.youtubeExtractor.YtFile;
 public class YtDownloader {
     private static final String TAG = "YtDownloader";
 
-    private static final int MP4_360P_ITAG = 18;
+    private static final int ITAG = 18;
 
-    private Context mContext;
+    private MainActivity mActivity;
 
-    public YtDownloader(Context context) {
-
-        this.mContext = context;
+    public YtDownloader(MainActivity _activity) {
+        this.mActivity = _activity;
     }
 
     public void extractYoutubeFile(String youtubeLink) {
-        new YouTubeExtractor(this.mContext) {
+        new YouTubeExtractor(this.mActivity) {
             @Override
             public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
                 if (ytFiles != null) {
@@ -35,7 +36,7 @@ public class YtDownloader {
                         Log.e("onCreate", ytFiles.get(key).toString());
                     }
 
-                    YtFile ytFile = ytFiles.get(MP4_360P_ITAG);
+                    YtFile ytFile = ytFiles.get(ITAG);
                     String downloadUrl = ytFile.getUrl();
                     String filename = formatFileName(vMeta.getTitle(), ytFile);
 
@@ -56,7 +57,7 @@ public class YtDownloader {
     }
 
     private void downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {
-        Toast.makeText(mContext, "Download Started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.mActivity, "Download Started", Toast.LENGTH_SHORT).show();
         Uri uri = Uri.parse(youtubeDlUrl);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setTitle(downloadTitle);
@@ -64,11 +65,7 @@ public class YtDownloader {
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-
-        DownloadManager manager = (DownloadManager) this.mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager manager = (DownloadManager) this.mActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
-
-
-
     }
 }
