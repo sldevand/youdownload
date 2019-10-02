@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="StepText">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">@dimen/spacing_30dp</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="StepProgressBar">
+        <item name="android:paddingTop">@dimen/spacing_30dp</item>
+        <item name="android:visibility">invisible</item>
+
+    </style>
+
 </resources>

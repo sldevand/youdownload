@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing_5dp">5dp</dimen>
+    <dimen name="spacing_10dp">10dp</dimen>
+    <dimen name="spacing_30dp">30dp</dimen>
+    <dimen name="spacing_80sp">80dp</dimen>
+    <dimen name="text_size_26sp">26sp</dimen>
+</resources>

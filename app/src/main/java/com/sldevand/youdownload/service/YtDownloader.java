@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
-import android.widget.Toast;
 
 import com.sldevand.youdownload.MainActivity;
 
@@ -20,6 +19,29 @@ public class YtDownloader {
     private static final int ITAG = 18;
 
     private MainActivity mActivity;
+
+    private OnDownloadStartedListener onDownloadStartedListener;
+
+    public interface OnDownloadStartedListener {
+        void onDownloadStarted();
+    }
+
+    private void downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {
+        Uri uri = Uri.parse(youtubeDlUrl);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setTitle(downloadTitle);
+
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+
+        DownloadManager manager = (DownloadManager) this.mActivity.getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
+
+        if (null != this.onDownloadStartedListener) {
+            this.onDownloadStartedListener.onDownloadStarted();
+        }
+    }
 
     public YtDownloader(MainActivity _activity) {
         this.mActivity = _activity;
@@ -56,16 +78,7 @@ public class YtDownloader {
         return filename.replaceAll("[\\\\><\"|*?%:#/]", "");
     }
 
-    private void downloadFromUrl(String youtubeDlUrl, String downloadTitle, String fileName) {
-        Toast.makeText(this.mActivity, "Download Started", Toast.LENGTH_SHORT).show();
-        Uri uri = Uri.parse(youtubeDlUrl);
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setTitle(downloadTitle);
-
-        request.allowScanningByMediaScanner();
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-        DownloadManager manager = (DownloadManager) this.mActivity.getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
+    public void setOnDownloadStartedListener(OnDownloadStartedListener onDownloadStartedListener) {
+        this.onDownloadStartedListener = onDownloadStartedListener;
     }
 }

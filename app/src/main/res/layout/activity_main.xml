@@ -4,33 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
+    android:padding="@dimen/spacing_30dp"
     tools:context="com.sldevand.youdownload.MainActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/youtube_url_hint"
-        android:labelFor="@id/uriEditText"/>
-
-    <EditText
-        android:id="@+id/uriEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textUri" />
 
     <Button
         android:id="@+id/downloadImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/uriEditText"
         android:text="@string/download"
-        android:layout_below="@id/uriEditText"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/spacing_80sp"
+        android:layout_marginEnd="@dimen/spacing_80sp"
+        android:background="?attr/selectableItemBackground"
+        android:textColor="@color/colorAccent" />
+
+    <EditText
+        android:id="@+id/uriEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/urilabelTextView"
+        android:inputType="textUri"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textColorLink="@color/white" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/spacing_80sp"
         android:indeterminate="true"
-        android:visibility="gone"
-        android:layout_below="@id/downloadImageButton" />
+        android:layout_below="@id/downloadImageButton"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/urilabelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/youtube_url_hint"
+        android:labelFor="@id/uriEditText"
+        android:paddingBottom="@dimen/spacing_5dp"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
