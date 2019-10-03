@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">YouDownload</string>
     <string name="error_no_yt_link">No Youtube Link</string>
-    <string name="youtube_url_hint">Youtube Url</string>
     <string name="download">Download</string>
     <string name="not_valid_url">Url is not valid!</string>
-    <string name="steps">Steps</string>
     <string name="downloading">Downloading</string>
     <string name="converting">Converting</string>
-    <string name="writing_file">Writing file</string>
     <string name="done">Done</string>
     <string name="preparing">Preparing</string>
+    <string name="youtube_url_hint">Youtbe Url</string>
 </resources>

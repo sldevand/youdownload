@@ -8,6 +8,7 @@ import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,15 +23,9 @@ public class MainActivity extends RootActivity implements FFmpegConverter.FFMpeg
 
     private Bundle mSavedInstanceState;
 
-    private ProgressBar preparingProgressBar;
-    private ProgressBar downloadingProgressBar;
-    private ProgressBar convertingProgressBar;
-
-    private TextView preparingTextView;
-    private TextView downloadingTextView;
-    private TextView convertingTextView;
-    private TextView doneTextView;
-    private TextView versionTextView;
+    private ProgressBar statusProgressBar;
+    private TextView statusTextView;
+    private ImageView doneImageView;
 
     private Button downloadButton;
 
@@ -40,25 +35,12 @@ public class MainActivity extends RootActivity implements FFmpegConverter.FFMpeg
         setContentView(R.layout.activity_main);
         this.mSavedInstanceState = savedInstanceState;
 
-        this.preparingProgressBar = findViewById(R.id.preparingProgressBar);
-        this.downloadingProgressBar = findViewById(R.id.downloadingProgressBar);
-        this.convertingProgressBar = findViewById(R.id.convertingProgressBar);
-
-        this.preparingTextView = findViewById(R.id.preparingTextView);
-        this.downloadingTextView = findViewById(R.id.downloadingTextView);
-        this.convertingTextView = findViewById(R.id.convertingTextView);
-        this.doneTextView = findViewById(R.id.doneTextView);
-        this.versionTextView = findViewById(R.id.versionTextView);
-
+        this.statusProgressBar = findViewById(R.id.statusProgressBar);
+        this.statusTextView = findViewById(R.id.statusTextView);
         this.downloadButton = findViewById(R.id.downloadImageButton);
-        String versionName = "";
-        try {
-            versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
-            this.versionTextView.setText(versionName);
+        this.doneImageView = findViewById(R.id.doneImageView);
 
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        displayVersionTextView();
 
         if (isStoragePermissionGranted()) {
             this.launchPermittedAction();
@@ -112,35 +94,45 @@ public class MainActivity extends RootActivity implements FFmpegConverter.FFMpeg
             Toast.makeText(this, R.string.error_no_yt_link, Toast.LENGTH_LONG).show();
             finish();
         }
+        this.downloadButton.setVisibility(View.GONE);
+        this.statusProgressBar.setVisibility(View.VISIBLE);
+        this.statusTextView.setVisibility(View.VISIBLE);
+        this.statusTextView.setText(getString(R.string.preparing));
 
         YtDownloader ytDownloader = new YtDownloader(this);
         ytDownloader.setOnDownloadStartedListener(this);
-        this.downloadButton.setVisibility(View.GONE);
-        this.preparingTextView.setVisibility(View.VISIBLE);
-        this.preparingProgressBar.setVisibility(View.VISIBLE);
-
         ytDownloader.extractYoutubeFile(ytLink);
+    }
+
+    private void displayVersionTextView() {
+        TextView versionTextView = findViewById(R.id.versionTextView);
+        try {
+            String versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
+            versionTextView.setText(versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onDownloadStarted() {
-        this.downloadingTextView.setVisibility(View.VISIBLE);
-        this.downloadingProgressBar.setVisibility(View.VISIBLE);
+        this.statusTextView.setText(getString(R.string.downloading));
     }
 
     @Override
     public void ondownloadComplete(File file) {
-        this.downloadingProgressBar.clearAnimation();
-
         FFmpegConverter fFmpegConverter = new FFmpegConverter(this);
         fFmpegConverter.setOnFinishListener(this);
         fFmpegConverter.convert(file);
-        this.convertingTextView.setVisibility(View.VISIBLE);
-        this.convertingProgressBar.setVisibility(View.VISIBLE);
+
+        this.statusTextView.setText(getString(R.string.converting));
     }
 
     @Override
     public void onConversionFinished() {
-        this.doneTextView.setVisibility(View.VISIBLE);
+        this.statusProgressBar.setVisibility(View.INVISIBLE);
+        this.statusTextView.setText(getString(R.string.done));
+        this.statusTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+        this.doneImageView.setVisibility(View.VISIBLE);
     }
 }

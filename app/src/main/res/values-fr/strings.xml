@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YouDownload</string>
+    <string name="converting">Conversion</string>
+    <string name="done">Terminé</string>
+    <string name="download">Télécharger</string>
+    <string name="downloading">Téléchargement</string>
+    <string name="error_no_yt_link">Pas de lien Youtube</string>
+    <string name="not_valid_url">L\'Url n\'est pas valide!</string>
+    <string name="preparing">En préparation</string>
+    <string name="youtube_url_hint">Url Youtube</string>
+    <string name="steps">Etapes</string>
+    <string name="writing_file">Ecriture fichier</string>
+</resources>
