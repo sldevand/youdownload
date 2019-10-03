@@ -21,6 +21,10 @@ android {
         maven { url "https://jitpack.io" }
         mavenCentral()
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
