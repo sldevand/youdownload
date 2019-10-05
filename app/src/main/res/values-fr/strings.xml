@@ -11,4 +11,8 @@
     <string name="youtube_url_hint">Url Youtube</string>
     <string name="steps">Etapes</string>
     <string name="writing_file">Ecriture fichier</string>
+    <string name="settings">Préférences</string>
+    <string name="title_activity_settings">Préférences</string>
+    <string name="outputFolderSummary">Choisissez votre dossier de destination</string>
+    <string name="outputFolderTitle">Dossier de destination</string>
 </resources>

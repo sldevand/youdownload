@@ -8,4 +8,15 @@
     <string name="done">Done</string>
     <string name="preparing">Preparing</string>
     <string name="youtube_url_hint">Youtbe Url</string>
+    <string name="settings">Settings</string>
+    <string name="outputFolderSummary">Choose your output folder here</string>
+    <string name="outputFolderTitle">Output folder</string>
+    <string name="outputFolderKey" translatable="false">outputFolder</string>
+    <string name="steps">Steps</string>
+    <string name="writing_file">Writing file</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="attachment_title" translatable="false">Download incoming attachments</string>
+    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails</string>
+    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>
 </resources>
