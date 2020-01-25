@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,17 +27,37 @@
         android:textColorHint="@color/white"
         android:textColorLink="@color/white" />
 
+    <TextView
+        android:id="@+id/outputFolderTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/uriEditText"
+        android:paddingBottom="@dimen/spacing_5dp"
+        android:text="@string/outputFolderTitle"
+        android:textColor="@color/white"
+        android:layout_below="@id/uriEditText"/>
+
+    <EditText
+        android:id="@+id/outputFolderEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/outputFolderTitle"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textColorLink="@color/white"
+        android:enabled="false"
+        android:layout_below="@id/outputFolderTextView"/>
+
     <Button
         android:id="@+id/downloadImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/uriEditText"
+        android:layout_below="@id/outputFolderEditText"
         android:text="@string/download"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/spacing_80sp"
         android:layout_marginEnd="@dimen/spacing_80sp"
         android:background="@drawable/ripple"
-        android:elevation="@dimen/spacing_5dp"
         android:textColor="@color/colorPrimaryDark" />
 
     <ProgressBar

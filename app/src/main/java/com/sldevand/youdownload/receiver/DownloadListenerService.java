@@ -38,6 +38,7 @@ public class DownloadListenerService extends BroadcastReceiver {
         this.mContext = context;
 
         Bundle b = intent.getExtras();
+        assert b != null;
         long fileId = b.getLong(DownloadManager.EXTRA_DOWNLOAD_ID);
 
         String realPath = this.getPath(fileId);

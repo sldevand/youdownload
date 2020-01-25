@@ -15,15 +15,21 @@ public class FFmpegConverter {
 
     private static final String TAG = "FFmpegConverter";
     private Context mContext;
+    private String mOutputFolder;
 
     private FFMpegConverterOnFinishListener onFinishListener;
 
     public interface FFMpegConverterOnFinishListener {
-        void onConversionFinished();
+        void onConversionFinished(String message);
+
+        void onConversionError(String message);
+
+        void onConversionSuccess(String message);
     }
 
-    public FFmpegConverter(Context context) {
+    public FFmpegConverter(Context context, String outputFolder) {
         this.mContext = context;
+        this.mOutputFolder = outputFolder;
     }
 
     public void convert(File file) {
@@ -43,9 +49,16 @@ public class FFmpegConverter {
         final String sourceAbsolutePath = file.getAbsolutePath();
         final String noExtension = FilenameUtils.removeExtension(sourceAbsolutePath);
         final String targetExtension = "aac";
-        final String targetAbsolutePath = noExtension + "." + targetExtension;
+        final String baseName = FilenameUtils.getBaseName(sourceAbsolutePath);
+        String targetAbsolutePath = noExtension + "." + targetExtension;
 
-        String[] cmd = {"-y", "-i", sourceAbsolutePath, "-vn", "-acodec", "copy", targetAbsolutePath};
+        if (!this.mOutputFolder.isEmpty()) {
+            targetAbsolutePath = this.mOutputFolder + baseName + "." + targetExtension;
+        }
+
+        final String outputFilePath = targetAbsolutePath;
+
+        String[] cmd = {"-y", "-i", sourceAbsolutePath, "-vn", "-acodec", "copy", outputFilePath};
         ffmpeg.execute(cmd, new ExecuteBinaryResponseHandler() {
 
             @Override
@@ -60,39 +73,36 @@ public class FFmpegConverter {
 
             @Override
             public void onFailure(String message) {
-                Toast.makeText(
-                        mContext,
-                        "FFMpeg failure = " + message,
-                        Toast.LENGTH_LONG
-                ).show();
                 Log.e(TAG, "FFMpeg failure = " + message);
+                if (null != onFinishListener) {
+                    onFinishListener.onConversionError(message);
+                }
             }
 
 
             @Override
             public void onSuccess(String message) {
-                Toast.makeText(
-                        mContext,
-                        "Successfully converted " + sourceAbsolutePath + "\n into " + targetAbsolutePath,
-                        Toast.LENGTH_LONG
-                ).show();
 
-                Log.e(TAG, "Successfully converted " + sourceAbsolutePath + "\n into " + targetAbsolutePath);
+                if (null != onFinishListener) {
+                    onFinishListener.onConversionSuccess("Successfully converted " + sourceAbsolutePath + "\n into " + outputFilePath);
+                }
+
+                Log.e(TAG, "Successfully converted " + sourceAbsolutePath + "\n into " + outputFilePath);
             }
 
             @Override
             public void onFinish() {
                 File fdelete = new File(sourceAbsolutePath);
+                String message = "Can't delete any file";
                 if (fdelete.exists()) {
+                    message = "file not deleted :" + sourceAbsolutePath;
                     if (fdelete.delete()) {
-                        System.out.println("file Deleted :" + sourceAbsolutePath);
-                    } else {
-                        System.out.println("file not Deleted :" + sourceAbsolutePath);
+                        message = "file deleted :" + sourceAbsolutePath;
                     }
                 }
 
                 if (null != onFinishListener) {
-                    onFinishListener.onConversionFinished();
+                    onFinishListener.onConversionFinished(message);
                 }
             }
         });
