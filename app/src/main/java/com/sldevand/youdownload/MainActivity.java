@@ -67,16 +67,7 @@ public class MainActivity extends RootActivity implements FFmpegConverter.FFMpeg
     private void init() {
         SharedPreferences sharedPref = getSharedPreferences(SettingsActivity.PREFS_KEY, Context.MODE_PRIVATE);
 
-
-        if (sharedPref.contains(getString(R.string.outputFolderKey))) {
-            Log.e("SharedPreferences", "contains " + getString(R.string.outputFolderKey));
-        } else {
-            Log.e("SharedPreferences", "doesn't contain " + getString(R.string.outputFolderKey));
-        }
-
-
         this.mOutputFolder = sharedPref.getString(getString(R.string.outputFolderKey), "");
-        assert this.mOutputFolder != null;
         if (this.mOutputFolder.isEmpty()) {
             this.mOutputFolder = Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DOWNLOADS + "/";
         }
